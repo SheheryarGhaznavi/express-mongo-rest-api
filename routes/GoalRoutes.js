@@ -1,48 +1,25 @@
 const express = require('express');
 const GoalRoutes = express.Router();
+const { getGoals, createGoals, updateGoals, deleteGoals } = require('../controllers/GoalController');
+// const { getGoals, createGoals, updateGoals, deleteGoals } = require('../controllers/GoalAdvancedController');
+
+GoalRoutes.route('/')
+
+    // Get goals
+    .get(getGoals)
+
+    // Create goals
+    .post(createGoals);
 
 
 
+GoalRoutes.route('/:id')
 
-GoalRoutes.get(
-    '/',
-    (request, response) => {
-        response
-        .status(500)
-        .json({'message' : 'Get Goals'});
-    }
-);
+    // Update goals
+    .put(updateGoals)
 
-GoalRoutes.post(
-    '/',
-    (request, response) => {
-        response
-        .status(201)
-        .json({'message' : 'Set Goals'});
-    }
-);
-
-GoalRoutes.put(
-    '/:id',
-    (request, response) => {
-        response
-        .status(200)
-        .json({'message' : 'Update Goals'});
-    }
-);
-
-GoalRoutes.delete(
-    '/:id',
-    (request, response) => {
-        response
-        .status(200)
-        .json({'message' : 'Delete Goals'});
-    }
-);
-
-
-
-
+    // Delete goals
+    .delete(deleteGoals);
 
 
 module.exports = GoalRoutes;
