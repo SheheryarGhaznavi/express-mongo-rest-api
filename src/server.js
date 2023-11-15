@@ -1,17 +1,22 @@
 const express = require('express');
 const GoalRoutes = require('../routes/GoalRoutes');
 const dotenv = require('dotenv').config();
+const { errorHandler } = require('../middlewares/ErrorMiddleware');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 
-// Middlewares
+// PRE-Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 
 
 // Routes
 app.use('/api/goals', GoalRoutes);
+
+
+// POST-Middlewares
+app.use(errorHandler);
 
 app.listen(port);
