@@ -28,7 +28,25 @@ const createGoals = asyncHandler(
 
 const updateGoals = asyncHandler(
     async (request, response) => {
-        response.status(200) .json({'message' : `Update Goals ${request.params.id}`});
+
+        const goal = await GoalModel.findById(request.params.id);
+
+        if (!goal) {
+            
+            response.status(400);
+            throw new Error('Goal not found against this id');
+        }
+
+        if ( !request.body.text ) {
+            response.status(400);
+            throw new Error('Text field is required');
+        }
+
+        const updated_goal = await GoalModel.findByIdAndUpdate(request.params.id, {
+            text: request.body.text
+        }, { new : true });
+
+        response.status(200) .json({'message' : `Update Goals ${request.params.id}`, 'data' : updated_goal});
     }
 );
 
