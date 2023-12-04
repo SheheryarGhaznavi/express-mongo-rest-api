@@ -14,10 +14,14 @@ const createGoals = asyncHandler(
     async (request, response) => {
 
         if ( !request.body.text ) {
-            // response.status(400);
+            response.status(400);
             throw new Error('Text field is required 2');
         }
-        response.status(201).json({'message' : 'Create Goals'});
+
+        const goal = await GoalModel.create({
+            text: request.body.text
+        });
+        response.status(201).json({'message' : 'Create Goals', 'data' : goal});
     }
 );
 
