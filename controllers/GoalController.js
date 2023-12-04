@@ -53,6 +53,17 @@ const updateGoals = asyncHandler(
 
 const deleteGoals = asyncHandler(
     async (request, response) => {
+
+        const goal = await GoalModel.findById(request.params.id);
+
+        if (!goal) {
+            
+            response.status(400);
+            throw new Error('Goal not found against this id');
+        }
+
+        await goal.deleteOne();
+
         response.status(200) .json({'message' : `Delete Goals ${request.params.id}`});
     }
 );
