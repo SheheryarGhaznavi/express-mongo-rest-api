@@ -1,5 +1,6 @@
 const express = require('express');
 const GoalRoutes = require('../routes/GoalRoutes');
+const UserRoutes = require('../routes/UserRoutes');
 const dotenv = require('dotenv').config();
 const { errorHandler } = require('../middlewares/ErrorMiddleware');
 const connectDB = require('../config/database');
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: false}));
 
 // Routes
 app.use('/api/goals', GoalRoutes);
+app.use('/api/users', UserRoutes);
 
 
 // POST-Middlewares
