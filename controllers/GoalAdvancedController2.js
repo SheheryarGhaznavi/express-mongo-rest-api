@@ -1,10 +1,34 @@
 const GoalModel = require('../models/GoalModel');
-const BaseController = require('./BaseController');
+const asyncHandler = require('express-async-handler');
 
-class GoalAdvancedController extends BaseController {
+
+class GoalAdvancedController {
+
+    constructor() {
+
+        this.number = 3;
+    }
+    
+    responseFormat() {
+        console.log('okj');
+    }
+
+
+    
+    // getGoals = (request, response) => {
+    //     this.myClass.runMyTest();
+    //     console.log(this);
+    //     this.responseFormat();
+    //     response.status(200).json({'message' : 'Get Goals'});
+    // }
     
     async get(request, response)
     {
+
+        const class_name2 = 'MyClass';
+        const myClass = new lib["MyClass"];
+        myClass.runMyTest();
+
         const goals = await GoalModel.find();
         response.status(200).json({'message' : 'Get Goals', 'data' : goals});
     }
@@ -61,5 +85,28 @@ class GoalAdvancedController extends BaseController {
 }
 
 
+class MyClass {
 
-module.exports = new GoalAdvancedController;
+    myTest() {
+      console.log('it works');
+    }
+
+    runMyTest() {
+      this.myTest();
+    }
+
+}
+
+const class_instance = new GoalAdvancedController();
+
+
+const callFunction = (function_name, class_name) => {
+    
+    console.log(this);
+    console.log(class_name);
+    console.log(function_name);
+    const advanced = new GoalAdvancedController();
+    return asyncHandler(class_instance[function_name]);
+}
+
+module.exports = callFunction;
