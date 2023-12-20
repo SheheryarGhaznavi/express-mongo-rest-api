@@ -5,7 +5,7 @@ class GoalAdvancedController extends BaseController {
     
     async get(request, response)
     {
-        const goals = await GoalModel.find();
+        const goals = await GoalModel.find({ user : request.user.id});
         response.status(200).json({'message' : 'Get Goals', 'data' : goals});
     }
 
