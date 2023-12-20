@@ -34,8 +34,15 @@ class GoalAdvancedController extends BaseController {
         }
 
         if ( !request.body.text ) {
+
             response.status(400);
             throw new Error('Text field is required');
+        }
+
+        if (goal.user != request.user.id) {
+
+            response.status(400);
+            throw new Error('User not authorized');
         }
 
         const updated_goal = await GoalModel.findByIdAndUpdate(request.params.id, {
