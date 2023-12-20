@@ -2,24 +2,25 @@ const express = require('express');
 const GoalRoutes = express.Router();
 // const { getGoals, createGoals, updateGoals, deleteGoals } = require('../controllers/GoalController');
 const { callFunction } = require('../controllers/GoalAdvancedController');
+const protect = require('../middlewares/AuthMiddleware');
 
 GoalRoutes.route('/')
 
     // Get goals
-    .get(callFunction('get'))
+    .get(protect, callFunction('get'))
 
     // Create goals
-    .post(callFunction('create'));
+    .post(protect, callFunction('create'));
 
 
 
 GoalRoutes.route('/:id')
 
     // Update goals
-    .put(callFunction('update'))
+    .put(protect, callFunction('update'))
 
     // Delete goals
-    .delete(callFunction('delete'));
+    .delete(protect, callFunction('delete'));
 
 
 module.exports = GoalRoutes;
