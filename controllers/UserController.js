@@ -51,7 +51,39 @@ const register = asyncHandler( async (request, response) => {
 });
 
 const login = asyncHandler( async (request, response) => {
-    response.json({message : 'Login User'});
+
+    const { email, password } = request.body;
+
+    if (!email || !password) {
+        response.status(400);
+        throw new Error('Please add all fields'); 
+    }
+
+    /// Checking that email exists or not
+    const user = await UserModel.findOne({email});
+
+    if (!user) {
+        response.status(400);
+        throw new Error('User not exists'); 
+    }
+
+
+    /// Comparing Password
+    if (bcrypt.compare(password, user.password)) {
+
+        response.status(200);
+        response.json({message : 'User Login Successfully', data : {
+            _id : user.id,
+            name : user.name,
+            email : user.email,
+            token : generateToken(user._id)
+        }});
+
+    } else {
+
+        response.status(400);
+        throw new Error('Invalid Password');         
+    }
 });
 
 const get = asyncHandler( async (request, response) => {
