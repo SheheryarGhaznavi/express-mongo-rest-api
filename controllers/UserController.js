@@ -88,7 +88,9 @@ const login = asyncHandler( async (request, response) => {
 });
 
 const get = asyncHandler( async (request, response) => {
-    response.json({'message' : 'Get User'});
+
+    response.status(200);
+    response.json({'message' : 'Get User', 'data' : request.user});
 });
 
 const generateToken = (id) => {
