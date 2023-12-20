@@ -41,6 +41,7 @@ const register = asyncHandler( async (request, response) => {
             _id : user.id,
             name : user.name,
             email : user.email,
+            token : generateToken(user._id)
         }});
 
     } else {
@@ -89,6 +90,10 @@ const login = asyncHandler( async (request, response) => {
 const get = asyncHandler( async (request, response) => {
     response.json({'message' : 'Get User'});
 });
+
+const generateToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET, { expiresIn : '60d' });
+}
 
 module.exports = { 
     register,
