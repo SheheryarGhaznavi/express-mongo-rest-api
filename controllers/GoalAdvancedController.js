@@ -62,6 +62,12 @@ class GoalAdvancedController extends BaseController {
             throw new Error('Goal not found against this id');
         }
 
+        if (goal.user != request.user.id) {
+
+            response.status(400);
+            throw new Error('User not authorized');
+        }
+
         await goal.deleteOne();
 
         response.status(200) .json({'message' : `Delete Goals ${request.params.id}`});
