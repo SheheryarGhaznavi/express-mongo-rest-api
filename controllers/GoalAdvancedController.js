@@ -17,6 +17,7 @@ class GoalAdvancedController extends BaseController {
         }
 
         const goal = await GoalModel.create({
+            user: request.user.id,
             text: request.body.text
         });
         response.status(201).json({'message' : 'Create Goals', 'data' : goal});
